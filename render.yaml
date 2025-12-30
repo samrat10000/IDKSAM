@@ -9,9 +9,9 @@ services:
       - key: NODE_VERSION
         value: 18.17.0
       - key: MONGO_URI
-        fromValue: ${MONGO_URI}
+        sync: false
       - key: ADMIN_PASSWORD
-        fromValue: ${ADMIN_PASSWORD}
+        sync: false
 
   # Frontend Static Site
   - type: web
@@ -21,7 +21,7 @@ services:
     staticPublishPath: client/dist
     envVars:
       - key: VITE_API_URL
-        fromValue: ${VITE_API_URL}
+        sync: false
     routes:
       - type: rewrite
         source: /*

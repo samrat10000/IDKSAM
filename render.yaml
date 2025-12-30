@@ -14,9 +14,11 @@ services:
       - key: ADMIN_PASSWORD
         sync: false
 
-staticSites:
   # Frontend Static Site
-  - name: idksam
+  - type: web
+    name: idksam
+    plan: free
+    runtime: static
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: client/dist
     envVars:

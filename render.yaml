@@ -17,7 +17,6 @@ services:
   # Frontend Static Site
   - type: web
     name: idksam
-    plan: free
     runtime: static
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: client/dist

@@ -1,0 +1,94 @@
+.jjk-mascots-container {
+    position: fixed;
+    bottom: -1px;
+    /* Slight offset to ensure their feet are "glued" to the taskbar */
+    left: 0;
+    right: 0;
+    padding: 0 40px;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    /* Ensures feet are aligned at the bottom */
+    pointer-events: none;
+}
+
+.music-link-btn {
+    position: fixed;
+    bottom: 0 !important;
+    left: 13rem;
+    transform: translateX(-50%);
+    background: #ff4757;
+    border: 1px solid #000;
+    border-bottom: none;
+    color: #fff;
+    padding: 4px 12px;
+    font-family: var(--font-pixel);
+    font-size: 0.6rem;
+    cursor: pointer;
+    z-index: 10002;
+    pointer-events: auto;
+    white-space: nowrap;
+    border-radius: 0 !important;
+}
+
+.music-link-btn:hover {
+    transform: translateX(-50%) translateY(-4px);
+    box-shadow: 0 4px 0 #000;
+}
+
+.mascot-pair {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.jjk-image {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    transition: transform 0.2s;
+}
+
+.jjk-image:hover {
+    transform: scale(1.1);
+}
+
+.gojo-bubble,
+.geto-bubble {
+    position: absolute;
+    bottom: 100%;
+    background: #fff;
+    border: 1px solid #333;
+    padding: 8px 12px;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: #333;
+    min-width: 120px;
+    max-width: 180px;
+    text-align: center;
+    box-shadow: none;
+    margin-bottom: 15px;
+}
+
+.gojo-bubble::after,
+.geto-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: inherit;
+}
+
+.gojo-bubble {
+    border-color: #a8a8ff;
+}
+
+.geto-bubble {
+    border-color: #333;
+}

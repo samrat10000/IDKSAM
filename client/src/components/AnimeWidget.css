@@ -1,0 +1,132 @@
+/* Anime Widget - NOTEBOOK INDIE STYLE */
+.anime-drawer-container {
+    position: absolute;
+    top: 250px;
+    left: 100%;
+    z-index: 99;
+    display: flex;
+    align-items: flex-start;
+}
+
+.anime-drawer-container.open {
+    z-index: 10002;
+}
+
+/* Drawer Content - Notebook Paper Look */
+.anime-drawer-content {
+    background: #fffef5;
+    background-image:
+        linear-gradient(#e8e8e8 1px, transparent 1px);
+    background-size: 100% 24px;
+    border: none;
+    width: 0;
+    overflow: hidden;
+    max-height: 350px;
+    box-shadow: none;
+    opacity: 0;
+}
+
+.anime-drawer-container.open .anime-drawer-content {
+    width: 200px;
+    margin-right: 8px;
+    border: 1px solid var(--accent);
+    overflow: visible;
+    opacity: 1;
+}
+
+/* Toggle Button - Kawaii Style */
+.anime-drawer-toggle {
+    background: #ff8fab;
+    border: 1px solid var(--accent);
+    color: #fff;
+    padding: 10px 6px;
+    cursor: pointer;
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    height: 80px;
+    letter-spacing: 0;
+    box-shadow: none;
+    font-weight: normal;
+    text-transform: lowercase;
+    border-radius: 0 !important;
+    margin-left: 4px;
+    transition: all 0.2s;
+}
+
+/* Title - Tape/Label Style */
+.anime-drawer-title {
+    padding: 0.5rem 0.7rem;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: #333;
+    background: #ffeb3b;
+    border: 1px solid transparent;
+    border-bottom: 1px solid var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: rotate(-1deg);
+    margin: 5px;
+    display: inline-block;
+}
+
+/* Anime List */
+.anime-list {
+    padding: 0.8rem;
+}
+
+.anime-item {
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 0.5rem;
+    background: transparent;
+    border-left: 0;
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.anime-item::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: #ff8fab;
+    font-size: 0.8rem;
+}
+
+.anime-link {
+    color: #333;
+    text-decoration: none;
+    font-family: var(--font-typewriter);
+    font-size: 0.8rem;
+    display: block;
+}
+
+/* Noob Bubble Tooltip */
+.noob-bubble {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 5px;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    font-family: var(--font-pixel);
+    font-size: 0.55rem;
+    white-space: nowrap;
+    border: 2px solid #ff8fab;
+    z-index: 9999;
+}
+
+.noob-bubble::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: -8px;
+    border: 4px solid transparent;
+    border-bottom-color: #333;
+}
+
+.anime-item:hover .noob-bubble {
+    display: block;
+}

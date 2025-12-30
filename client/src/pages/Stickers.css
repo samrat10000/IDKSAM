@@ -1,0 +1,141 @@
+.stickers-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.stickers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.available-stickers-section {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border: 1px dotted var(--accent);
+}
+
+.available-stickers-section h3 {
+    font-family: var(--font-pixel);
+    margin-bottom: 1rem;
+    color: var(--accent-green);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sticker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sticker-item {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--window-bg);
+    border: 1px solid #333;
+    cursor: pointer;
+    font-size: 2rem;
+    transition: all 0.2s;
+    position: relative;
+    padding: 5px;
+}
+
+.sticker-item:hover {
+    transform: scale(1.1);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--border-glow);
+}
+
+.sticker-item.collected {
+    opacity: 0.3;
+    cursor: default;
+    filter: grayscale(1);
+}
+
+.rarity-legendary {
+    box-shadow: 0 0 10px gold;
+    border-color: gold !important;
+}
+
+/* White Board Aesthetic */
+.sticker-board-wrapper {
+    padding: 20px;
+    background: #e0e0e0;
+    /* Gray border around the white board */
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.sticker-board {
+    min-height: 500px;
+    background: #ffffff;
+    border: 2px solid #333;
+    position: relative;
+    overflow: hidden;
+    /* Scrapbook grid/dots effect */
+    background-image:
+        radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 30px 30px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.empty-msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-pixel);
+    color: #999;
+}
+
+.sticker-item-placed {
+    position: absolute;
+    z-index: 10;
+    cursor: grab;
+    user-select: none;
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.4));
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sticker-item-placed:hover {
+    z-index: 100;
+    transform: scale(1.1) rotate(0deg) !important;
+}
+
+.sticker-item-placed:active {
+    cursor: grabbing;
+}
+
+.sticker-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.sticker-img-large {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    background: white;
+    padding: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.sticker-emoji {
+    font-size: 3rem;
+    filter: drop-shadow(2px 2px 0 white);
+}
+
+/* Sticker buttons */
+.pixel-btn {
+    text-transform: lowercase;
+}

@@ -1,0 +1,54 @@
+/* Inosuke Mascot - Top Right Corner of Dashboard */
+.inosuke-mascot {
+    position: absolute;
+    top: -144px;
+    /* Sits exactly on the edge */
+    right: -10px;
+    /* Aligned to corner */
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inosuke-image {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Speech Bubble */
+.inosuke-bubble {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: -10px;
+    background: #fff;
+    border: 1px solid #333;
+    padding: 10px 14px;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: #333;
+    max-width: 180px;
+    text-align: center;
+    box-shadow: none;
+}
+
+.inosuke-bubble::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 30px;
+    border: 5px solid transparent;
+    border-bottom-color: #333;
+}
+
+.inosuke-bubble::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 31px;
+    border: 4px solid transparent;
+    border-bottom-color: #fff;
+}

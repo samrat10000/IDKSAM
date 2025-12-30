@@ -1,0 +1,83 @@
+/* Pull-Out Drawer Style - Notebook Paper Look */
+.bg-drawer-container {
+    position: fixed;
+    top: 210px;
+    /* Offset lower to avoid overlap with themes */
+    left: 140px;
+    /* Offset from buttons */
+    z-index: 10001;
+    display: flex;
+    align-items: flex-start;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.bg-drawer-container.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.bg-drawer-content {
+    background: #fffef5;
+    background-image: linear-gradient(#f0f0f0 1px, transparent 1px);
+    background-size: 100% 20px;
+    border: 1px solid var(--accent);
+    padding: 1.5rem 0.8rem 0.8rem;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 220px;
+}
+
+.bg-drawer-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    padding: 2px 8px;
+    background: #4ecdc4;
+    /* Different color for differentiation */
+    color: #fff;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bg-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.bg-btn {
+    width: 100%;
+    height: 45px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-btn:hover {
+    transform: scale(1.03);
+}
+
+.bg-btn.active {
+    border: 2px solid #333;
+}
+
+.bg-btn span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 0.5rem;
+    font-family: var(--font-pixel);
+    padding: 2px;
+    text-align: center;
+}

@@ -1,0 +1,95 @@
+.updates-drawer-container {
+    position: absolute;
+    top: 40px;
+    left: 100%;
+    /* Anchor to right edge of dashboard */
+    left: 100%;
+    /* Anchor to right edge of dashboard */
+    z-index: 99;
+    display: flex;
+    align-items: flex-start;
+    /* No transition - Instant toggle */
+}
+
+.updates-drawer-container.open {
+    z-index: 10002;
+    /* Ensure active drawer is on top */
+}
+
+.updates-drawer-content {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    padding: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    border-radius: 0;
+
+    transform-origin: left center;
+    transform: scaleX(0);
+    /* No transition */
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    border: none;
+    max-height: 400px;
+}
+
+.updates-drawer-container.open .updates-drawer-content {
+    transform: scaleX(1);
+    width: 280px;
+    padding: 0;
+    opacity: 1;
+    border: 1px solid #333;
+    margin-right: 8px;
+    /* Space between content and button */
+}
+
+.updates-drawer-toggle {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    color: #888;
+    padding: 10px 6px;
+    cursor: pointer;
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: none;
+    border-radius: 0 !important;
+    margin-left: 4px;
+    transition: all 0.2s;
+    user-select: none;
+    height: 80px;
+}
+
+.updates-drawer-toggle:hover {
+    color: #fff;
+    background: var(--accent);
+}
+
+.updates-list {
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 350px;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.updates-list::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.widget-header {
+    background: rgba(168, 168, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-bottom: 1px dashed var(--accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-pixel);
+    font-weight: bold;
+}

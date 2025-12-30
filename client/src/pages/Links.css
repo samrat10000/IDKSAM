@@ -1,0 +1,123 @@
+/* Links Page Specific Styling */
+
+.links-container {
+    padding-bottom: 4rem;
+    position: relative;
+    min-height: 400px;
+}
+
+.pixel-badge-custom {
+    width: 88px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    border: 1px solid #333;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+    text-shadow: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.1s;
+    cursor: pointer;
+    image-rendering: pixelated;
+    background-color: #fff;
+    /* Default */
+}
+
+.pixel-badge-custom:hover {
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+    filter: brightness(1.05);
+}
+
+.pixel-badge-custom:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.badge-icon {
+    font-size: 16px;
+    margin-right: 4px;
+    z-index: 3;
+}
+
+.badge-text {
+    flex-grow: 1;
+    text-align: center;
+    letter-spacing: 1px;
+    z-index: 3;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Portfolio: Flat Gold */
+.pixel-badge-custom.portfolio {
+    background: #ffcc00;
+    color: #333;
+    border-color: #e6b800;
+}
+
+/* LinkedIn: Flat Blue */
+.pixel-badge-custom.linkedin {
+    background: #0077b5;
+    color: #fff;
+    border-color: #005f93;
+}
+
+/* GitHub: Flat Dark */
+.pixel-badge-custom.github {
+    background: #24292e;
+    color: #fff;
+    border-color: #000;
+}
+
+.pixel-badge-custom.github .badge-text {
+    color: #39d353;
+    font-family: 'Courier New', monospace;
+}
+
+/* Email: Flat White/Red */
+.pixel-badge-custom.email {
+    background: #ffffff;
+    color: #d93025;
+    border-color: #ccc;
+}
+
+/* Playlist: Hot Pink */
+.pixel-badge-custom.playlist {
+    background: #ff0055;
+    color: #fff;
+    border-color: #cc0044;
+}
+
+/* Webrings */
+.pixel-badge-custom.faeraphim {
+    background: #e0ccff;
+    color: #5500aa;
+    border-color: #cc99ff;
+}
+
+.pixel-badge-custom.pollygon {
+    background: #00ffff;
+    color: #000;
+    border-color: #00cccc;
+}
+
+.pixel-badge-custom.finny {
+    background: #ffff00;
+    color: #000;
+    border-color: #cccc00;
+}
+
+.pixel-badge-custom.lejlart {
+    background: #ffdddd;
+    color: #aa0000;
+    border-color: #ffaaaa;
+}
+
+.pixel-badge-custom.lejlart .badge-icon {
+    font-size: 14px;
+}

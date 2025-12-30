@@ -1,0 +1,158 @@
+/* Guestbook BBS Styles */
+.guestbook-page {
+    position: relative;
+    min-height: 400px;
+}
+
+.guestbook-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.guestbook-input-section,
+.guestbook-wall {
+    border: 1px dashed var(--text-dim);
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.section-label {
+    font-family: var(--font-pixel);
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    font-size: 1rem;
+}
+
+.guestbook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: var(--font-pixel);
+    margin-bottom: 0.5rem;
+    color: var(--text-dim);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: #000;
+    border: 1px solid var(--text-dim);
+    color: var(--text-main);
+    padding: 0.8rem;
+    font-family: var(--font-typewriter);
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--border-glow);
+}
+
+/* Kaomoji Grid */
+.kaomoji-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.kaomoji-btn {
+    background: #111;
+    border: 1px solid #333;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: var(--font-pixel);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.kaomoji-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.kaomoji-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+}
+
+.retro-submit-btn {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 0.8rem;
+    font-family: var(--font-pixel);
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+}
+
+.retro-submit-btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* BBS Log Entries */
+.bbs-log {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bbs-entry {
+    font-family: var(--font-typewriter);
+    border-left: 2px solid var(--text-dim);
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+
+.bbs-header {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.bbs-id {
+    opacity: 0.5;
+}
+
+.bbs-timestamp {
+    color: var(--accent-green);
+}
+
+.bbs-user {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.bbs-message {
+    color: var(--text-main);
+    line-height: 1.4;
+}
+
+.status-msg {
+    margin-top: 1rem;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-family: var(--font-pixel);
+}
+
+.empty-msg {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-style: italic;
+}

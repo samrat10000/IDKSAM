@@ -1,0 +1,246 @@
+.bikes-page {
+    padding: 2rem 1rem;
+    min-height: 100%;
+    background-color: #050505;
+    color: #eee;
+    font-family: 'Courier Prime', monospace;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    /* Prevent horizontal scroll from rotation */
+}
+
+.bikes-page::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari/Opera */
+}
+
+.mechanical-header {
+    border-bottom: 2px dashed #fff;
+    margin-bottom: 4rem;
+    padding-bottom: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.mechanical-header h1 {
+    font-family: 'VT323', monospace;
+    font-size: 2.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin: 0;
+    line-height: 0.8;
+}
+
+.header-stamp {
+    font-size: 0.8rem;
+    font-family: 'VT323', monospace;
+    border: 1px solid #fff;
+    padding: 4px 8px;
+    background: #000;
+}
+
+.bikes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.tech-card {
+    background: #111;
+    border: 1px solid #fff;
+    padding: 10px;
+    position: relative;
+    box-shadow: 6px 6px 0 #333;
+}
+
+/* Chaos: Cards slightly tilted for zine feel */
+.tech-card:nth-child(odd) {
+    transform: rotate(-1deg);
+}
+
+.tech-card:nth-child(even) {
+    transform: rotate(1deg);
+}
+
+.tech-card:nth-child(3n) {
+    transform: rotate(1.5deg);
+}
+
+.tech-card::before {
+    content: " // ASSET_0" counter(card-counter);
+    position: absolute;
+    top: -12px;
+    right: 5px;
+    font-size: 0.7rem;
+    background: #000;
+    border: 1px solid #fff;
+    padding: 0 5px;
+    color: #fff;
+    font-family: 'VT323', monospace;
+    z-index: 2;
+}
+
+.bike-image-container {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #222;
+    position: relative;
+    border-bottom: 1px solid #fff;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.bike-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.1) brightness(0.9);
+}
+
+.tech-details {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+}
+
+.bike-name {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    color: #fff;
+    display: block;
+    border-bottom: 1px solid #333;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.2rem;
+}
+
+.bike-specs {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 1rem;
+}
+
+.spec-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    border-bottom: 1px dotted #333;
+}
+
+.spec-label {
+    color: #666;
+}
+
+/* Dream Bike Section - Organized File */
+.dream-bike-section {
+    margin: 5rem auto;
+    width: 95%;
+    border: 2px solid #fff;
+    padding: 1rem;
+    position: relative;
+    background: #0a0a0a;
+    box-shadow: 10px 10px 0 #222;
+}
+
+.dream-label {
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    background: #000;
+    padding: 0 10px;
+    font-family: 'VT323', monospace;
+    color: #fff;
+    font-size: 1.2rem;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+
+.dream-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.dream-frame {
+    flex: 1.5;
+    min-height: 300px;
+    background: #000;
+    border: 1px solid #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.dream-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.1) brightness(0.9);
+}
+
+.dream-specs-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    color: #000;
+    padding: 4px 8px;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    display: flex;
+    gap: 1rem;
+    z-index: 2;
+}
+
+.dream-specs-overlay span {
+    font-weight: bold;
+}
+
+.dream-desc {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px dashed #444;
+    padding-left: 2rem;
+}
+
+.dream-title {
+    font-family: 'VT323', monospace;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #555;
+    color: #fff;
+}
+
+.scrapbook-footer {
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+    color: #555;
+    font-family: 'VT323', monospace;
+    text-align: right;
+    font-size: 1.2rem;
+    margin-top: 3rem;
+}
+
+@media (max-width: 800px) {
+    .dream-layout {
+        flex-direction: column;
+    }
+
+    .dream-desc {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px dashed #444;
+        padding-top: 1rem;
+    }
+}

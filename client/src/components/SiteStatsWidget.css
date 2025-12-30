@@ -1,0 +1,105 @@
+.stats-drawer-container {
+    position: absolute;
+    top: 140px;
+    /* Below Updates (40 + 80 + 20 gap) */
+    left: 100%;
+    z-index: 99;
+    display: flex;
+    align-items: flex-start;
+    /* No transition */
+}
+
+.stats-drawer-container.open {
+    z-index: 10002;
+}
+
+.stats-drawer-content {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    padding: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    border-radius: 0;
+
+    transform-origin: left center;
+    transform: scaleX(0);
+    /* No transition */
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    border: none;
+}
+
+.stats-drawer-container.open .stats-drawer-content {
+    transform: scaleX(1);
+    width: 280px;
+    padding: 0;
+    opacity: 1;
+    border: 1px solid #333;
+    margin-right: 8px;
+    margin-right: 8px;
+}
+
+.stats-drawer-toggle {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    color: #888;
+    padding: 10px 6px;
+    cursor: pointer;
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: none;
+    border-radius: 0 !important;
+    margin-left: 4px;
+    transition: all 0.2s;
+    user-select: none;
+    height: 80px;
+}
+
+.stats-drawer-toggle:hover {
+    color: #fff;
+    background: var(--accent);
+}
+
+.stats-content {
+    padding: 1rem;
+    overflow-y: auto;
+    /* Enable scrolling */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.stats-content::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
+.stat-row {
+    display: flex;
+    flex-direction: column;
+    /* Stack label and value for more room */
+    margin-bottom: 1rem;
+    font-family: var(--font-pixel);
+}
+
+.stat-label {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    /* Bigger for that indie impact */
+    font-weight: bold;
+    line-height: 1.2;
+}

@@ -1,0 +1,118 @@
+.admin-dashboard {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+}
+
+.admin-header h1 {
+    font-family: var(--font-pixel);
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid var(--text-dim);
+    color: var(--text-dim);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-typewriter);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--window-bg);
+    border: 1px solid var(--accent);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 0 10px var(--border-glow);
+}
+
+.stat-value {
+    font-family: var(--font-pixel);
+    font-size: 3rem;
+    color: var(--accent-green);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-family: var(--font-pixel);
+    color: var(--text-main);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.stat-detail {
+    font-family: var(--font-typewriter);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+.admin-actions h2 {
+    font-family: var(--font-pixel);
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.action-btn {
+    background: var(--window-bg);
+    border: 2px solid var(--text-dim);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-main);
+    font-family: var(--font-typewriter);
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--border-glow);
+}
+
+.action-icon {
+    font-size: 2.5rem;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: var(--font-pixel);
+    color: var(--accent);
+    font-size: 1.5rem;
+}

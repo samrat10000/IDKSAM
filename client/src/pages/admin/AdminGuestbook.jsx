@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css'; // Use shared admin styles
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const AdminGuestbook = () => {
     const [entries, setEntries] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
     const token = localStorage.getItem('adminToken');
+    const navigate = useNavigate(); // Keep navigate for redirection if token is missing
 
     useEffect(() => {
         if (!token) {
@@ -14,17 +16,17 @@ const AdminGuestbook = () => {
             return;
         }
         fetchEntries();
-    }, [token, navigate]);
+    }, [token, navigate]); // Keep token and navigate in dependencies for initial check
 
     const fetchEntries = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/admin/guestbook', {
+            const res = await fetch(`${API_URL}/api/admin/guestbook`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
             setEntries(data);
         } catch (err) {
-            console.error('Error fetching guestbook:', err);
+            console.error(err);
         } finally {
             setLoading(false);
         }
@@ -32,26 +34,25 @@ const AdminGuestbook = () => {
 
     const handleApprove = async (id) => {
         try {
-            await fetch(`http://localhost:5000/api/admin/guestbook/${id}/approve`, {
+            await fetch(`${API_URL}/api/admin/guestbook/${id}/approve`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchEntries(); // Refresh list
         } catch (err) {
-            console.error('Error approving:', err);
+            console.error(err);
         }
     };
 
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this entry forever?')) return;
         try {
-            await fetch(`http://localhost:5000/api/admin/guestbook/${id}`, {
+            await fetch(`${API_URL}/api/admin/guestbook/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchEntries();
         } catch (err) {
-            console.error('Error deleting:', err);
         }
     };
 

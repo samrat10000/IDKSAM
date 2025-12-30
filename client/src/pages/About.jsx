@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const About = () => {
-    const [data, setData] = useState(null);
+    const [aboutData, setAboutData] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/about')
+        fetch(`${API_URL}/api/about`)
             .then(res => res.json())
-            .then(val => setData(val))
+            .then(val => setAboutData(val))
             .catch(err => console.error(err));
     }, []);
 
-    if (!data) return <div className="loading">Loading identity...</div>;
+    if (!aboutData) return <div className="loading">Loading identity...</div>;
 
     return (
         <React.Fragment>
@@ -29,16 +31,16 @@ const About = () => {
                 <div className="info-section">
                     <div className="bio-block">
                         <h3 className="section-label">// BIOGRAPHY</h3>
-                        <p className="bio-text">{data.bio}</p>
+                        <p className="bio-text">{aboutData.bio}</p>
                     </div>
 
                     <div className="stats-block">
                         <h3 className="section-label">// STATS</h3>
                         <div className="stats-grid">
-                            <div className="stat-item">STR: {data.stats.str}</div>
-                            <div className="stat-item">DEX: {data.stats.dex}</div>
-                            <div className="stat-item">INT: {data.stats.int}</div>
-                            <div className="stat-item">LCK: {data.stats.lck}</div>
+                            <div className="stat-item">STR: {aboutData.stats.str}</div>
+                            <div className="stat-item">DEX: {aboutData.stats.dex}</div>
+                            <div className="stat-item">INT: {aboutData.stats.int}</div>
+                            <div className="stat-item">LCK: {aboutData.stats.lck}</div>
                         </div>
                     </div>
 

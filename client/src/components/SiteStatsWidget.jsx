@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './SiteStatsWidget.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const SiteStatsWidget = () => {
     const [visits, setVisits] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +10,7 @@ const SiteStatsWidget = () => {
     useEffect(() => {
         const fetchVisits = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/visits');
+                const res = await fetch(`${API_URL}/api/visits`);
                 const data = await res.json();
                 setVisits(data.count);
             } catch (err) {

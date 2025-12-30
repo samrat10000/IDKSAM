@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Home = () => {
     const [text, setText] = useState('');
-    const [data, setData] = useState(null);
+    const [homeData, setHomeData] = useState(null);
     const fullText = "welcome to the digital bedroom...";
 
     useEffect(() => {
         // Fetch dynamic content
-        fetch('http://localhost:5000/api/home')
+        fetch(`${API_URL}/api/home`)
             .then(res => res.json())
             .then(val => {
-                setData(val);
+                setHomeData(val);
                 // Trigger typing effect for welcome text from DB if available
                 const welcomeStr = val.welcomeText || fullText;
                 let index = 0;
@@ -44,7 +46,7 @@ const Home = () => {
     return (
         <React.Fragment>
             <header className="content-header">
-                <h1 className="pixel-title">{data ? data.title : 'Welcome!'}</h1>
+                <h1 className="pixel-title">{homeData ? homeData.title : 'Welcome!'}</h1>
                 <p className="typing-text">
                     {text}<span className="cursor"></span>
                 </p>
@@ -70,9 +72,9 @@ const Home = () => {
                 <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--text-dim)' }}>
                             // CURRENT STATUS
                 </p>
-                <p>Mood: <span className="mood-box"></span> {data?.status?.mood || 'Hazy'}</p>
+                <p>Mood: <span className="mood-box"></span> {homeData?.status?.mood || 'Hazy'}</p>
                 <p>Listening: Iris - The Goo Goo Dolls</p>
-                <p>Building: {data?.status?.building || 'This website'}</p>
+                <p>Building: {homeData?.status?.building || 'This website'}</p>
             </div>
         </React.Fragment >
     );

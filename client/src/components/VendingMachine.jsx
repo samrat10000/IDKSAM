@@ -134,10 +134,10 @@ const VendingMachine = ({ isVisible, setIsVisible }) => {
                                         {item.id === 'F1' && <div className="slot-badge hot">HOT</div>}
 
                                         <div className="slot-item">
-                                            {item.preview.startsWith('/') ? (
+                                            {item.preview && typeof item.preview === 'string' && item.preview.startsWith('/') ? (
                                                 <img src={item.preview} alt={item.name} className="vending-item-img" />
                                             ) : (
-                                                <span style={{ fontSize: '1.2rem' }}>{item.preview}</span>
+                                                <span style={{ fontSize: '1.2rem' }}>{item.preview || '❓'}</span>
                                             )}
                                         </div>
 
@@ -174,11 +174,11 @@ const VendingMachine = ({ isVisible, setIsVisible }) => {
                                 <p className="empty-inv">empty...</p>
                             ) : (
                                 inventory.map((item, i) => (
-                                    <span key={i} className="inv-item" title={item.name}>
-                                        {item.preview.startsWith('/') ? (
+                                    <span key={i} className="inv-item" title={item?.name || 'Unknown Item'}>
+                                        {item?.preview && typeof item.preview === 'string' && item.preview.startsWith('/') ? (
                                             <img src={item.preview} alt={item.name} className="vending-item-img-small" />
                                         ) : (
-                                            item.preview
+                                            item?.preview || '❓'
                                         )}
                                     </span>
                                 ))

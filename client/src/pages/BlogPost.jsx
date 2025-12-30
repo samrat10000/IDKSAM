@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './Blog.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const BlogPost = () => {
     const { id } = useParams();
     const [post, setPost] = useState(null);
@@ -9,21 +11,20 @@ const BlogPost = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`${API_URL}/api/blog/${id}`);
+                if (!response.ok) throw new Error('Post not found');
+                const data = await response.json();
+                setPost(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
         fetchPost();
     }, [id]);
-
-    const fetchPost = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/api/blog/${id}`);
-            if (!response.ok) throw new Error('Post not found');
-            const data = await response.json();
-            setPost(data);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);

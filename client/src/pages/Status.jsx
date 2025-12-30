@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Status = () => {
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/status')
+        fetch(`${API_URL}/api/status`)
             .then(res => res.json())
             .then(data => {
                 setStatus(data);

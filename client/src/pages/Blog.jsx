@@ -3,27 +3,28 @@ import { Link } from 'react-router-dom';
 import TojiMascot from '../components/TojiMascot';
 import './Blog.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Blog = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await fetch(`${API_URL}/api/blog`);
+                if (!response.ok) throw new Error('Failed to fetch posts');
+                const data = await response.json();
+                setPosts(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
         fetchPosts();
     }, []);
-
-    const fetchPosts = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/api/blog');
-            if (!response.ok) throw new Error('Failed to fetch posts');
-            const data = await response.json();
-            setPosts(data);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);

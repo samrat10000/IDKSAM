@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import MegumiMascot from '../components/MegumiMascot';
 import './Guestbook.css';
 
+// Indie/Kaomoji Stamps instead of generic emojis
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Guestbook = () => {
     const [entries, setEntries] = useState([]);
-    const [formData, setFormData] = useState({ name: '', message: '', stamp: '✨' });
+    const [formData, setFormData] = useState({ name: '', message: '', website: '' });
     const [status, setStatus] = useState('');
 
-    // Indie/Kaomoji Stamps instead of generic emojis
     const stamps = [
         '(^_^)',
         '(>_<)',
@@ -20,14 +22,14 @@ const Guestbook = () => {
     ];
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/guestbook')
+        fetch(`${API_URL}/api/guestbook`)
             .then(res => res.json())
             .then(data => setEntries(data));
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:5000/api/guestbook', {
+        fetch(`${API_URL}/api/guestbook`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)

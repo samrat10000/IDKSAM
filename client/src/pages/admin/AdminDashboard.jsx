@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './AdminDashboard.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const AdminDashboard = () => {
     const [stats, setStats] = useState({
         totalPosts: 0,
@@ -19,37 +21,37 @@ const AdminDashboard = () => {
             return;
         }
 
+        const fetchStats = async () => {
+            try {
+                const headers = { 'Authorization': `Bearer ${token}` };
+
+                // Fetch blog posts
+                const blogRes = await fetch(`${API_URL}/api/admin/blog`, { headers });
+                const posts = await blogRes.json();
+
+                // Fetch guestbook entries
+                const guestbookRes = await fetch(`${API_URL}/api/admin/guestbook`, { headers });
+                const entries = await guestbookRes.json();
+
+                // Fetch visits
+                const visitsRes = await fetch(`${API_URL}/api/visits`);
+                const visits = await visitsRes.json();
+
+                setStats({
+                    totalPosts: posts.length,
+                    publishedPosts: posts.filter(p => p.published).length,
+                    pendingGuestbook: entries.filter(e => !e.approved).length,
+                    totalVisits: visits.count || 0
+                });
+            } catch (err) {
+                console.error('Error fetching stats:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchStats();
     }, [token, navigate]);
-
-    const fetchStats = async () => {
-        try {
-            const headers = { 'Authorization': `Bearer ${token}` };
-
-            // Fetch blog posts
-            const blogRes = await fetch('http://localhost:5000/api/admin/blog', { headers });
-            const posts = await blogRes.json();
-
-            // Fetch guestbook entries
-            const guestbookRes = await fetch('http://localhost:5000/api/admin/guestbook', { headers });
-            const entries = await guestbookRes.json();
-
-            // Fetch visits
-            const visitsRes = await fetch('http://localhost:5000/api/visits');
-            const visits = await visitsRes.json();
-
-            setStats({
-                totalPosts: posts.length,
-                publishedPosts: posts.filter(p => p.published).length,
-                pendingGuestbook: entries.filter(e => !e.approved).length,
-                totalVisits: visits.count || 0
-            });
-        } catch (err) {
-            console.error('Error fetching stats:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleLogout = () => {
         localStorage.removeItem('adminToken');

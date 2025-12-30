@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Scrapbook = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/scrapbook')
+        fetch(`${API_URL}/api/scrapbook`)
             .then(res => res.json())
             .then(data => {
                 setItems(data);

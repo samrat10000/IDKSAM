@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './BlogEditor.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const BlogEditor = () => {
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
-    const [formData, setFormData] = useState({
-        title: '',
-        content: '',
-        excerpt: '',
-        tags: '',
-        published: false
-    });
+    const [formData, setFormData] = useState({ title: '', excerpt: '', content: '', tags: '', published: true });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
@@ -28,7 +24,7 @@ const BlogEditor = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/admin/blog', {
+            const response = await fetch(`${API_URL}/api/admin/blog`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -58,8 +54,8 @@ const BlogEditor = () => {
 
         try {
             const url = editingPost
-                ? `http://localhost:5000/api/admin/blog/${editingPost._id}`
-                : 'http://localhost:5000/api/admin/blog';
+                ? `${API_URL}/api/admin/blog/${editingPost._id}`
+                : `${API_URL}/api/admin/blog`;
 
             const method = editingPost ? 'PUT' : 'POST';
 
@@ -102,7 +98,7 @@ const BlogEditor = () => {
         if (!window.confirm('Delete this digital fragment forever?')) return;
 
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/blog/${id}`, {
+            const response = await fetch(`${API_URL}/api/admin/blog/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

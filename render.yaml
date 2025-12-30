@@ -1,0 +1,28 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: idksam-api
+    runtime: node
+    buildCommand: npm install && cd server && npm install
+    startCommand: cd server && node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
+      - key: MONGO_URI
+        fromValue: ${MONGO_URI}
+      - key: ADMIN_PASSWORD
+        fromValue: ${ADMIN_PASSWORD}
+
+  # Frontend Static Site
+  - type: web
+    name: idksam
+    runtime: static
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/dist
+    envVars:
+      - key: VITE_API_URL
+        fromValue: ${VITE_API_URL}
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

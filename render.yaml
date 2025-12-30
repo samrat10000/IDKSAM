@@ -2,6 +2,7 @@ services:
   # Backend Web Service
   - type: web
     name: idksam-api
+    plan: free
     runtime: node
     buildCommand: npm install && cd server && npm install
     startCommand: cd server && node server.js
@@ -13,10 +14,9 @@ services:
       - key: ADMIN_PASSWORD
         sync: false
 
+staticSites:
   # Frontend Static Site
-  - type: web
-    name: idksam
-    runtime: static
+  - name: idksam
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: client/dist
     envVars:

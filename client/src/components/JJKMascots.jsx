@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './JJKMascots.css';
 
-const JJKMascots = ({ onMusicToggle, musicOpen }) => {
+const JJKMascots = () => {
     const [gojoMsg, setGojoMsg] = useState('');
     const [getoMsg, setGetoMsg] = useState('');
     const [showGojo, setShowGojo] = useState(false);

@@ -27,6 +27,12 @@ const Sidebar = () => {
             case '/bikes':
                 inosukeSay("METAL MONSTERS!! I WILL FIGHT THEM!!");
                 break;
+            case '/music':
+                inosukeSay("MUSIC!! THE SOUND OF VICTORIOUS BATTLE DRUMS!!");
+                break;
+            case '/vending':
+                inosukeSay("FOOD MACHINE!! GIVE ME ALL YOUR MEAT!!");
+                break;
             case '/guestbook':
                 inosukeSay("WHO ARE THESE WEAKLINGS WRITING HERE??");
                 break;
@@ -54,6 +60,8 @@ const Sidebar = () => {
                 <Link to="/stickers" className={`nav-item ${isActive('/stickers')}`}>stickers</Link>
                 <Link to="/stuff" className={`nav-item ${isActive('/stuff')}`}>stuff by me</Link>
                 <Link to="/bikes" className={`nav-item ${isActive('/bikes')}`}>bikes</Link>
+                <Link to="/music" className={`nav-item ${isActive('/music')}`}>music</Link>
+                <Link to="/vending" className={`nav-item ${isActive('/vending')}`}>vending</Link>
                 <Link to="/guestbook" className={`nav-item ${isActive('/guestbook')}`}>guestbook</Link>
                 <Link to="/links" className={`nav-item ${isActive('/links')}`}>links</Link>
             </nav>

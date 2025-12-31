@@ -6,7 +6,8 @@ import Links from './pages/Links';
 import Status from './pages/Status';
 import Scrapbook from './pages/Scrapbook';
 import Stickers from './pages/Stickers';
-import MusicBar from './components/MusicBar';
+import Music from './pages/Music';
+import Vending from './pages/Vending';
 import Sidebar from './components/Sidebar';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -22,7 +23,6 @@ import ThemeSwitcher from './components/ThemeSwitcher';
 import UpdatesWidget from './components/UpdatesWidget';
 import SiteStatsWidget from './components/SiteStatsWidget';
 import AnimeWidget from './components/AnimeWidget';
-import VendingMachine from './components/VendingMachine';
 import InosukeMascot from './components/InosukeMascot';
 import TanjiroZenitsuMascot from './components/TanjiroZenitsuMascot';
 import JJKMascots from './components/JJKMascots';
@@ -36,12 +36,10 @@ const App = () => {
     return saved !== null ? JSON.parse(saved) : true;
   });
   const [isNightTime, setIsNightTime] = useState(false);
-  const [musicVisible, setMusicVisible] = useState(false);
-  const [vendingVisible, setVendingVisible] = useState(false);
   const [themeVisible, setThemeVisible] = useState(false);
   const [bgVisible, setBgVisible] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('monstac-theme') || 'default');
-  const [background, setBackground] = useState(localStorage.getItem('monstac-bg') || 'city');
+  const [background, setBackground] = useState(localStorage.getItem('monstac-bg') || 'dotted-paper');
 
   useEffect(() => {
     localStorage.setItem('monstac-theme', theme);
@@ -113,21 +111,7 @@ const App = () => {
             CRT: {crtEnabled ? 'ON' : 'OFF'}
           </button>
 
-          {/* New Toggles */}
-          <button
-            className={`crt-toggle-btn ${musicVisible ? 'active-tag' : ''}`}
-            onClick={() => setMusicVisible(!musicVisible)}
-            style={{ marginLeft: '8px' }}
-          >
-            Music: {musicVisible ? 'ON' : 'OFF'}
-          </button>
-          <button
-            className={`crt-toggle-btn ${vendingVisible ? 'active-tag' : ''}`}
-            onClick={() => setVendingVisible(!vendingVisible)}
-            style={{ marginLeft: '8px' }}
-          >
-            Vend: {vendingVisible ? 'ON' : 'OFF'}
-          </button>
+
         </div>
         {crtEnabled && <div className="crt-overlay"></div>}
 
@@ -150,6 +134,8 @@ const App = () => {
                   <Route path="/stuff" element={<Scrapbook />} />
                   <Route path="/stickers" element={<Stickers />} />
                   <Route path="/bikes" element={<Bikes />} />
+                  <Route path="/music" element={<Music />} />
+                  <Route path="/vending" element={<Vending />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:id" element={<BlogPost />} />
                   <Route path="/guestbook" element={<Guestbook />} />
@@ -172,21 +158,11 @@ const App = () => {
             </div>
           </div>
 
-          {/* MusicBar is now self-contained */}
-          <MusicBar
-            isLivingNight={isLivingNight}
-            isOpen={musicVisible}
-            setIsOpen={setMusicVisible}
-          />
-
           {/* Retro Footer */}
           <Footer />
 
-          {/* Vending Machine - Controlled via Global Toggle */}
-          <VendingMachine isVisible={vendingVisible} setIsVisible={setVendingVisible} />
-
           {/* JJK Mascots - Bottom Left */}
-          <JJKMascots onMusicToggle={() => setMusicVisible(!musicVisible)} musicOpen={musicVisible} />
+          <JJKMascots />
         </div>
       </div>
     </Router >

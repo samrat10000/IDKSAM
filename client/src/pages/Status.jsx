@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -7,16 +8,17 @@ const Status = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${API_URL}/api/status`)
-            .then(res => res.json())
-            .then(data => {
-                setStatus(data);
-                setLoading(false);
-            })
-            .catch(err => {
+        const fetchStatus = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/api/status`);
+                setStatus(res.data);
+            } catch (err) {
                 console.error("Error fetching status:", err);
+            } finally {
                 setLoading(false);
-            });
+            }
+        };
+        fetchStatus();
     }, []);
 
     if (loading) return <div className="loading">connecting...</div>;

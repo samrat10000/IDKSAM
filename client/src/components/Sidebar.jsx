@@ -64,6 +64,7 @@ const Sidebar = () => {
                 <Link to="/vending" className={`nav-item ${isActive('/vending')}`}>vending</Link>
                 <Link to="/guestbook" className={`nav-item ${isActive('/guestbook')}`}>guestbook</Link>
                 <Link to="/links" className={`nav-item ${isActive('/links')}`}>links</Link>
+                <Link to="/contact" className={`nav-item ${isActive('/contact')}`} style={{ marginTop: '0.5rem' }}>contact me</Link>
             </nav>
 
             <div className="sidebar-footer">

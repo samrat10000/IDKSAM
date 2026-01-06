@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const scrapbookItemSchema = new mongoose.Schema({
     type: {
@@ -9,6 +9,10 @@ const scrapbookItemSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    caption: {
+        type: String,
+        default: ''
     },
     x: {
         type: Number,
@@ -28,4 +32,4 @@ const scrapbookItemSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('ScrapbookItem', scrapbookItemSchema);
+export default mongoose.model('ScrapbookItem', scrapbookItemSchema);

@@ -1,0 +1,150 @@
+/* Retro Modal Overlay */
+.retro-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* The Window Itself */
+.retro-window {
+    width: 500px;
+    background: #c0c0c0;
+    /* Classic Windows Gray */
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    /* Bevel effect */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Title Bar */
+.retro-title-bar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    /* Classic Blue Gradient */
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.retro-close-btn {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+}
+
+.retro-close-btn:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+}
+
+/* Body Content */
+.retro-window-body {
+    padding: 16px;
+}
+
+.retro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Inputs and Textarea */
+.retro-form input,
+.retro-form textarea {
+    background: white;
+    border: 2px solid;
+    border-color: #404040 #ffffff #ffffff #404040;
+    /* Inset/Sunken */
+    padding: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    outline: none;
+}
+
+.retro-form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.retro-form input:focus,
+.retro-form textarea:focus {
+    background: #fffae3;
+    /* Slight yellow tint like old paper */
+}
+
+/* Footer Buttons */
+.retro-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.retro-btn {
+    padding: 6px 16px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    /* Outset/Button */
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.retro-btn:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+    /* Pressed */
+    transform: translate(1px, 1px);
+}
+
+.retro-btn.send {
+    font-weight: 900;
+}
+
+/* Success Screen */
+.success-screen {
+    text-align: center;
+    padding: 40px;
+    font-weight: bold;
+    color: green;
+    font-size: 1.2rem;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 4px;
+}

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const statusSchema = new mongoose.Schema({
     mood: { type: String, default: '' },
@@ -9,4 +9,4 @@ const statusSchema = new mongoose.Schema({
     last_updated: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Status', statusSchema);
+export default mongoose.model('Status', statusSchema);

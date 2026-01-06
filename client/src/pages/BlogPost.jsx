@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import './Blog.css';
 
@@ -13,10 +14,8 @@ const BlogPost = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await fetch(`${API_URL}/api/blog/${id}`);
-                if (!response.ok) throw new Error('Post not found');
-                const data = await response.json();
-                setPost(data);
+                const response = await axios.get(`${API_URL}/api/blog/${id}`);
+                setPost(response.data);
             } catch (err) {
                 setError(err.message);
             } finally {

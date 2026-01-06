@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -7,10 +8,15 @@ const About = () => {
     const [aboutData, setAboutData] = useState(null);
 
     useEffect(() => {
-        fetch(`${API_URL}/api/about`)
-            .then(res => res.json())
-            .then(val => setAboutData(val))
-            .catch(err => console.error(err));
+        const fetchAbout = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/api/about`);
+                setAboutData(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchAbout();
     }, []);
 
     if (!aboutData) return <div className="loading">Loading identity...</div>;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -6,42 +7,40 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const Home = () => {
     const [text, setText] = useState('');
     const [homeData, setHomeData] = useState(null);
-    const fullText = "welcome to the digital bedroom...";
+    const fullText = "welcome to my digital bedroom...";
 
     useEffect(() => {
-        // Fetch dynamic content
-        fetch(`${API_URL}/api/home`)
-            .then(res => res.json())
-            .then(val => {
-                setHomeData(val);
-                // Trigger typing effect for welcome text from DB if available
-                const welcomeStr = val.welcomeText || fullText;
-                let index = 0;
-                const interval = setInterval(() => {
-                    if (index <= welcomeStr.length) {
-                        setText(welcomeStr.slice(0, index));
-                        index++;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 100);
-                return () => clearInterval(interval);
-            })
-            .catch(err => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${API_URL}/api/home`);
+                setHomeData(response.data);
+            } catch (err) {
                 console.error("Fetch error:", err);
-                // Fallback typing effect
-                let index = 0;
-                const interval = setInterval(() => {
-                    if (index <= fullText.length) {
-                        setText(fullText.slice(0, index));
-                        index++;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 100);
-                return () => clearInterval(interval);
-            });
+            }
+        };
+
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        // Typing effect logic
+        const targetText = (homeData && homeData.welcomeText) ? homeData.welcomeText : fullText;
+
+        // Reset text when target changes
+        setText('');
+
+        let index = 0;
+        const interval = setInterval(() => {
+            index++;
+            if (index <= targetText.length) {
+                setText(targetText.slice(0, index));
+            } else {
+                clearInterval(interval);
+            }
+        }, 100);
+
+        return () => clearInterval(interval);
+    }, [homeData]);
 
     return (
         <React.Fragment>
@@ -55,7 +54,7 @@ const Home = () => {
             <section className="content-body">
                 {/* 
                    Permanently showing personal bio instead of DB content 
-                   as per user request for this specific text.
+                   
                 */}
                 <>
                     <p>i'm sam. just a college student who codes sometimes. i like bikes, music, and building stuff on the web. this site is my digital space for things i'm working on and things i like.</p>

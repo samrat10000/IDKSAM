@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import MegumiMascot from '../components/MegumiMascot';
 import './Guestbook.css';
 
@@ -22,23 +23,27 @@ const Guestbook = () => {
     ];
 
     useEffect(() => {
-        fetch(`${API_URL}/api/guestbook`)
-            .then(res => res.json())
-            .then(data => setEntries(data));
+        const fetchEntries = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/api/guestbook`);
+                setEntries(res.data);
+            } catch (err) {
+                console.error("Error fetching guestbook:", err);
+            }
+        };
+        fetchEntries();
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch(`${API_URL}/api/guestbook`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                setStatus('signal transmitted... 📡');
-                setFormData({ name: '', message: '', stamp: '(^_^)' });
-            });
+        try {
+            await axios.post(`${API_URL}/api/guestbook`, formData);
+            setStatus('signal transmitted... 📡');
+            setFormData({ name: '', message: '', stamp: '(^_^)' });
+        } catch (err) {
+            console.error("Error submitting entry:", err);
+            setStatus('transmission failed 💥');
+        }
     };
 
     return (

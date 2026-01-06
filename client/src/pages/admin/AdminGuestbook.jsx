@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css'; // Use shared admin styles
 
@@ -20,11 +21,10 @@ const AdminGuestbook = () => {
 
     const fetchEntries = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/guestbook`, {
+            const res = await axios.get(`${API_URL}/api/admin/guestbook`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            const data = await res.json();
-            setEntries(data);
+            setEntries(res.data);
         } catch (err) {
             console.error(err);
         } finally {
@@ -34,8 +34,7 @@ const AdminGuestbook = () => {
 
     const handleApprove = async (id) => {
         try {
-            await fetch(`${API_URL}/api/admin/guestbook/${id}/approve`, {
-                method: 'PUT',
+            await axios.put(`${API_URL}/api/admin/guestbook/${id}/approve`, {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchEntries(); // Refresh list
@@ -47,8 +46,7 @@ const AdminGuestbook = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this entry forever?')) return;
         try {
-            await fetch(`${API_URL}/api/admin/guestbook/${id}`, {
-                method: 'DELETE',
+            await axios.delete(`${API_URL}/api/admin/guestbook/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchEntries();

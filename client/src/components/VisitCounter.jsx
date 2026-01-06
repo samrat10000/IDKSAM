@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -8,16 +9,14 @@ const VisitCounter = () => {
     useEffect(() => {
         const fetchVisits = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/visits`);
-                const data = await res.json();
-                setVisits(data.count);
+                const res = await axios.get(`${API_URL}/api/visits`);
+                setVisits(res.data.count);
 
                 // Increment on visit
                 const hasVisited = sessionStorage.getItem('hasVisited');
                 if (!hasVisited) {
-                    const incRes = await fetch(`${API_URL}/api/visits/increment`, { method: 'POST' });
-                    const incData = await incRes.json();
-                    setVisits(incData.count); // Changed from setCount to setVisits
+                    const incRes = await axios.post(`${API_URL}/api/visits/increment`);
+                    setVisits(incRes.data.count); // Changed from setCount to setVisits
                     sessionStorage.setItem('hasVisited', 'true'); // Changed from 'visited' to 'hasVisited'
                 }
             } catch (err) {

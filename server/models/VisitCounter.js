@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const visitCounterSchema = new mongoose.Schema({
     count: {
@@ -11,4 +11,4 @@ const visitCounterSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('VisitCounter', visitCounterSchema);
+export default mongoose.model('VisitCounter', visitCounterSchema);

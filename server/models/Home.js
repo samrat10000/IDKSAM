@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const HomeSchema = new mongoose.Schema({
     title: { type: String, default: 'Welcome!' },
-    welcomeText: { type: String, default: 'welcome to my digital bedroom...' },
+    welcomeText: { type: String, default: 'welcome to my digital room...' },
     introParagraphs: [{ type: String }],
     status: {
         mood: { type: String, default: 'Hazy' },
@@ -11,4 +11,4 @@ const HomeSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Home', HomeSchema);
+export default mongoose.model('Home', HomeSchema);

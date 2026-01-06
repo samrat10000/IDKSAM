@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './AdminDashboard.css';
 
@@ -26,16 +27,16 @@ const AdminDashboard = () => {
                 const headers = { 'Authorization': `Bearer ${token}` };
 
                 // Fetch blog posts
-                const blogRes = await fetch(`${API_URL}/api/admin/blog`, { headers });
-                const posts = await blogRes.json();
+                const blogRes = await axios.get(`${API_URL}/api/admin/blog`, { headers });
+                const posts = blogRes.data;
 
                 // Fetch guestbook entries
-                const guestbookRes = await fetch(`${API_URL}/api/admin/guestbook`, { headers });
-                const entries = await guestbookRes.json();
+                const guestbookRes = await axios.get(`${API_URL}/api/admin/guestbook`, { headers });
+                const entries = guestbookRes.data;
 
                 // Fetch visits
-                const visitsRes = await fetch(`${API_URL}/api/visits`);
-                const visits = await visitsRes.json();
+                const visitsRes = await axios.get(`${API_URL}/api/visits`);
+                const visits = visitsRes.data;
 
                 setStats({
                     totalPosts: posts.length,

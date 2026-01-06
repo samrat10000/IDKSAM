@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const AboutSchema = new mongoose.Schema({
     name: { type: String, default: 'Webmaster' },
@@ -17,4 +17,4 @@ const AboutSchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
-module.exports = mongoose.model('About', AboutSchema);
+export default mongoose.model('About', AboutSchema);

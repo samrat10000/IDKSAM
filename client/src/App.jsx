@@ -8,6 +8,7 @@ import Scrapbook from './pages/Scrapbook';
 import Stickers from './pages/Stickers';
 import Music from './pages/Music';
 import Vending from './pages/Vending';
+import Contact from './pages/Contact';
 import Sidebar from './components/Sidebar';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -130,6 +131,7 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/webmaster" element={<About />} />
                   <Route path="/links" element={<Links />} />
+                  <Route path="/contact" element={<Contact />} />
                   <Route path="/now" element={<Status />} />
                   <Route path="/stuff" element={<Scrapbook />} />
                   <Route path="/stickers" element={<Stickers />} />

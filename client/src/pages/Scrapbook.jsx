@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -7,16 +8,17 @@ const Scrapbook = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${API_URL}/api/scrapbook`)
-            .then(res => res.json())
-            .then(data => {
-                setItems(data);
-                setLoading(false);
-            })
-            .catch(err => {
+        const fetchScrapbook = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/api/scrapbook`);
+                setItems(res.data);
+            } catch (err) {
                 console.error('Error fetching scrapbook:', err);
+            } finally {
                 setLoading(false);
-            });
+            }
+        };
+        fetchScrapbook();
     }, []);
 
     if (loading) return <div className="loading">loading memories...</div>;

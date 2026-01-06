@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './BlogEditor.css';
 
@@ -24,11 +25,10 @@ const BlogEditor = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch(`${API_URL}/api/admin/blog`, {
+            const response = await axios.get(`${API_URL}/api/admin/blog`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            const data = await response.json();
-            setPosts(data);
+            setPosts(response.data);
         } catch (err) {
             console.error('Error fetching posts:', err);
         }
@@ -53,30 +53,20 @@ const BlogEditor = () => {
         };
 
         try {
-            const url = editingPost
-                ? `${API_URL}/api/admin/blog/${editingPost._id}`
-                : `${API_URL}/api/admin/blog`;
+            const headers = { 'Authorization': `Bearer ${token}` };
+            let response;
 
-            const method = editingPost ? 'PUT' : 'POST';
-
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(postData)
-            });
-
-            if (response.ok) {
-                setMessage(editingPost ? 'Post updated! ⚡' : 'Post created! ⚡');
-                resetForm();
-                fetchPosts();
+            if (editingPost) {
+                response = await axios.put(`${API_URL}/api/admin/blog/${editingPost._id}`, postData, { headers });
             } else {
-                setMessage('Error saving post. Check backend logs.');
+                response = await axios.post(`${API_URL}/api/admin/blog`, postData, { headers });
             }
+
+            setMessage(editingPost ? 'Post updated! ⚡' : 'Post created! ⚡');
+            resetForm();
+            fetchPosts();
         } catch (err) {
-            setMessage('Connection error.');
+            setMessage('Error saving post. Check backend logs.');
         } finally {
             setLoading(false);
         }
@@ -98,15 +88,12 @@ const BlogEditor = () => {
         if (!window.confirm('Delete this digital fragment forever?')) return;
 
         try {
-            const response = await fetch(`${API_URL}/api/admin/blog/${id}`, {
-                method: 'DELETE',
+            await axios.delete(`${API_URL}/api/admin/blog/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            if (response.ok) {
-                fetchPosts();
-                if (editingPost && editingPost._id === id) resetForm();
-            }
+            fetchPosts();
+            if (editingPost && editingPost._id === id) resetForm();
         } catch (err) {
             console.error('Error deleting:', err);
         }

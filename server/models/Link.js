@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const LinkSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -8,4 +8,4 @@ const LinkSchema = new mongoose.Schema({
     description: { type: String }
 });
 
-module.exports = mongoose.model('Link', LinkSchema);
+export default mongoose.model('Link', LinkSchema);

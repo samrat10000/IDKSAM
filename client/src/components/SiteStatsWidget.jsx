@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './SiteStatsWidget.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -10,9 +11,8 @@ const SiteStatsWidget = () => {
     useEffect(() => {
         const fetchVisits = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/visits`);
-                const data = await res.json();
-                setVisits(data.count);
+                const res = await axios.get(`${API_URL}/api/visits`);
+                setVisits(res.data.count);
             } catch (err) {
                 console.error("Failed to fetch stats", err);
             }

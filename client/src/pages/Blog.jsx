@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import TojiMascot from '../components/TojiMascot';
 import './Blog.css';
@@ -13,10 +14,8 @@ const Blog = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch(`${API_URL}/api/blog`);
-                if (!response.ok) throw new Error('Failed to fetch posts');
-                const data = await response.json();
-                setPosts(data);
+                const response = await axios.get(`${API_URL}/api/blog`);
+                setPosts(response.data);
             } catch (err) {
                 setError(err.message);
             } finally {

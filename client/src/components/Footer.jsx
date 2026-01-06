@@ -20,7 +20,7 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="retro-footer">
+        <footer className="site-footer">
             <div className="footer-content">
 
                 {/* Section 1: Webring */}

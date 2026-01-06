@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const guestbookEntrySchema = new mongoose.Schema({
     name: {
@@ -16,6 +16,10 @@ const guestbookEntrySchema = new mongoose.Schema({
         trim: true,
         default: ''
     },
+    stamp: {
+        type: String,
+        default: ''
+    },
     approved: {
         type: Boolean,
         default: false
@@ -24,4 +28,4 @@ const guestbookEntrySchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('GuestbookEntry', guestbookEntrySchema);
+export default mongoose.model('GuestbookEntry', guestbookEntrySchema);

@@ -1,7 +1,8 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,41 +11,23 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Import models
-const Home = require('./models/Home');
-const About = require('./models/About');
-const Link = require('./models/Link');
-const Status = require('./models/Status');
-const ScrapbookItemSchema = new mongoose.Schema({
-    type: { type: String, enum: ['image', 'note'], required: true },
-    content: { type: String, required: true }, // URL for image, text for note
-    caption: String,
-    x: { type: Number, default: 0 },
-    y: { type: Number, default: 0 },
-    rotation: { type: Number, default: 0 },
-    createdAt: { type: Date, default: Date.now }
-});
-const ScrapbookItem = mongoose.model('ScrapbookItem', ScrapbookItemSchema);
+// Import models (still needed for seeding)
+import Home from './models/Home.js';
+import About from './models/About.js';
+import Link from './models/Link.js';
+import Status from './models/Status.js';
+import ScrapbookItem from './models/ScrapbookItem.js';
+import GuestbookEntry from './models/GuestbookEntry.js';
+import VisitCounter from './models/VisitCounter.js';
+import BlogPost from './models/BlogPost.js';
 
-const GuestbookEntrySchema = new mongoose.Schema({
-    name: String,
-    message: String,
-    stamp: String,
-    approved: { type: Boolean, default: false },
-    createdAt: { type: Date, default: Date.now }
-});
-const GuestbookEntry = mongoose.model('GuestbookEntry', GuestbookEntrySchema);
-
-const VisitCounterSchema = new mongoose.Schema({
-    count: { type: Number, default: 0 },
-    lastUpdated: { type: Date, default: Date.now }
-});
-const VisitCounter = mongoose.model('VisitCounter', VisitCounterSchema);
-const BlogPost = require('./models/BlogPost');
-
-
-// Import auth middleware
-const authMiddleware = require('./middleware/auth');
+// Import Routes
+import authRoutes from './routes/authRoutes.js';
+import pageRoutes from './routes/pageRoutes.js';
+import visitRoutes from './routes/visitRoutes.js';
+import blogRoutes from './routes/blogRoutes.js';
+import guestbookRoutes from './routes/guestbookRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/indie-world')
@@ -54,91 +37,35 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/indie-world
     })
     .catch(err => console.error('MongoDB connection error:', err));
 
-// --- Guestbook Routes ---
-app.get('/api/guestbook', async (req, res) => {
-    try {
-        const entries = await GuestbookEntry.find({ approved: true }).sort('-createdAt');
-        res.json(entries);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+// Mount Routes
+app.use('/api', authRoutes);      // /api/admin/login
+app.use('/api', pageRoutes);      // /api/home, /api/about, etc.
+app.use('/api', visitRoutes);     // /api/visits
+app.use('/api', blogRoutes);      // /api/blog, /api/admin/blog
+app.use('/api', guestbookRoutes); // /api/guestbook, /api/admin/guestbook
+app.use('/api/contact', contactRoutes); // /api/contact/send
 
-app.post('/api/guestbook', async (req, res) => {
-    try {
-        const { name, message, stamp } = req.body;
-        const entry = await GuestbookEntry.create({ name, message, stamp });
-        res.json({ message: 'entry sent for approval!', entry });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Admin Moderation
-app.get('/api/admin/guestbook', authMiddleware, async (req, res) => {
-    try {
-        const entries = await GuestbookEntry.find().sort('-createdAt');
-        res.json(entries);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.put('/api/admin/guestbook/:id/approve', authMiddleware, async (req, res) => {
-    try {
-        await GuestbookEntry.findByIdAndUpdate(req.params.id, { approved: true });
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.delete('/api/admin/guestbook/:id', authMiddleware, async (req, res) => {
-    try {
-        await GuestbookEntry.findByIdAndDelete(req.params.id);
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// --- Visit Counter Routes ---
-app.get('/api/visits', async (req, res) => {
-    try {
-        let counter = await VisitCounter.findOne();
-        if (!counter) counter = await VisitCounter.create({ count: 0 });
-        res.json({ count: counter.count });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/api/visits/increment', async (req, res) => {
-    try {
-        let counter = await VisitCounter.findOne();
-        if (!counter) counter = await VisitCounter.create({ count: 1 });
-        else {
-            counter.count += 1;
-            counter.lastUpdated = Date.now();
-            await counter.save();
-        }
-        res.json({ count: counter.count });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Seeding function
+// Seeding function (Kept in server.js for now as it's a startup task)
 const seedDatabase = async () => {
     try {
         const homeCount = await Home.countDocuments();
         if (homeCount === 0) {
             await Home.create({
                 title: "welcome to my digital home",
+                welcomeText: "welcome to my digital room...",
                 content: "this is a small corner of the internet where i share my thoughts, projects, and fragments of life.",
                 updatedAt: new Date()
             });
             console.log('Home content seeded.');
+        } else {
+            // Force update welcome text if it exists but is old/missing
+            const homeDoc = await Home.findOne();
+            if (homeDoc) {
+                homeDoc.welcomeText = "welcome to my digital room...";
+                homeDoc.title = "welcome to my digital home";
+                await homeDoc.save();
+                console.log('Home content updated.');
+            }
         }
 
         // Force reset visits for deployment
@@ -260,205 +187,6 @@ const seedDatabase = async () => {
         console.error('Error seeding database:', err);
     }
 };
-
-// ============ API ROUTES ============
-
-// Original Routes
-app.get('/api/home', async (req, res) => {
-    try {
-        const data = await Home.findOne();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/about', async (req, res) => {
-    try {
-        const data = await About.findOne();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/links', async (req, res) => {
-    try {
-        const data = await Link.find();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/status', async (req, res) => {
-    try {
-        const data = await Status.findOne();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/scrapbook', async (req, res) => {
-    try {
-        const data = await ScrapbookItem.find();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// ============ NEW DYNAMIC CONTENT ROUTES ============
-
-// Admin Login
-app.post('/api/admin/login', (req, res) => {
-    const { password } = req.body;
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-    
-    if (password === adminPassword) {
-        res.json({ success: true, token: adminPassword });
-    } else {
-        res.status(401).json({ success: false, error: 'Invalid password' });
-    }
-});
-
-// ===== BLOG ROUTES =====
-
-app.get('/api/blog', async (req, res) => {
-    try {
-        const posts = await BlogPost.find({ published: true }).sort({ createdAt: -1 });
-        res.json(posts);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/blog/:id', async (req, res) => {
-    try {
-        const post = await BlogPost.findById(req.params.id);
-        if (!post) return res.status(404).json({ error: 'Post not found' });
-        res.json(post);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/admin/blog', authMiddleware, async (req, res) => {
-    try {
-        const posts = await BlogPost.find().sort({ createdAt: -1 });
-        res.json(posts);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/api/admin/blog', authMiddleware, async (req, res) => {
-    try {
-        const post = await BlogPost.create(req.body);
-        res.status(201).json(post);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.put('/api/admin/blog/:id', authMiddleware, async (req, res) => {
-    try {
-        const post = await BlogPost.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(post);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.delete('/api/admin/blog/:id', authMiddleware, async (req, res) => {
-    try {
-        await BlogPost.findByIdAndDelete(req.params.id);
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// ===== GUESTBOOK ROUTES =====
-
-app.get('/api/guestbook', async (req, res) => {
-    try {
-        const entries = await GuestbookEntry.find({ approved: true }).sort({ createdAt: -1 });
-        res.json(entries);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/api/guestbook', async (req, res) => {
-    try {
-        const entry = await GuestbookEntry.create({
-            name: req.body.name,
-            message: req.body.message,
-            website: req.body.website || '',
-            approved: false
-        });
-        res.status(201).json({ success: true, message: 'Submitted for approval!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/api/admin/guestbook', authMiddleware, async (req, res) => {
-    try {
-        const entries = await GuestbookEntry.find().sort({ createdAt: -1 });
-        res.json(entries);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.put('/api/admin/guestbook/:id/approve', authMiddleware, async (req, res) => {
-    try {
-        const entry = await GuestbookEntry.findByIdAndUpdate(req.params.id, { approved: true }, { new: true });
-        res.json(entry);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.delete('/api/admin/guestbook/:id', authMiddleware, async (req, res) => {
-    try {
-        await GuestbookEntry.findByIdAndDelete(req.params.id);
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// ===== VISIT COUNTER ROUTES =====
-
-app.get('/api/visits', async (req, res) => {
-    try {
-        let counter = await VisitCounter.findOne();
-        if (!counter) counter = await VisitCounter.create({ count: 0 });
-        res.json({ count: counter.count });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/api/visits/increment', async (req, res) => {
-    try {
-        let counter = await VisitCounter.findOne();
-        if (!counter) {
-            counter = await VisitCounter.create({ count: 1 });
-        } else {
-            counter.count += 1;
-            counter.lastUpdated = new Date();
-            await counter.save();
-        }
-        res.json({ count: counter.count });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 app.get('/', (req, res) => {
     res.send('Indie World API is running...');

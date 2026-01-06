@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Footer = () => {
     const [hits, setHits] = useState(1337);
 
-    // Simulate hit counter increment
+    // Real hit counter increment
     useEffect(() => {
-        const stored = localStorage.getItem('monstac-hits');
-        const initial = stored ? parseInt(stored) : 1337;
-        setHits(initial + 1);
-        localStorage.setItem('monstac-hits', initial + 1);
+        const incrementVisits = async () => {
+            // Basic check to prevent double-counting in strict mode or dev
+            // Real production apps might use session cookies, but this is simple enough
+            try {
+                const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+                const res = await axios.post(`${API_URL}/api/visits/increment`);
+                setHits(res.data.count);
+            } catch (err) {
+                console.error("Failed to increment visits", err);
+                // Fallback to local storage if API fails, just to show something
+                const stored = localStorage.getItem('monstac-hits');
+                setHits(stored ? parseInt(stored) : 1337);
+            }
+        };
+        incrementVisits();
     }, []);
 
     const badges = [

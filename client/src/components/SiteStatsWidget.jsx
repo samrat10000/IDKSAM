@@ -21,7 +21,7 @@ const SiteStatsWidget = () => {
     }, []);
 
     const createdDate = "3/26/2024";
-    const updatedDate = "...";
+    const updatedDate = "1/6/2026";
 
     return (
         <div className={`stats-drawer-container ${isOpen ? 'open' : ''}`}>
